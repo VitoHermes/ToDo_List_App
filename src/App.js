@@ -1,24 +1,61 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+
 import './App.css';
+import Header from './componets/Header/Header';
+import Input from './componets/Input/Input';
+import TodoList from './componets/TodoList/TodoList';
 
 function App() {
+
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+
+  const addTask = (taskText) => {
+    setTasks([...tasks, {
+      id: Date.now(),
+      text: taskText,
+      completed: false
+    }]);
+  };
+
+  const onToggleComplete = (taskId) => {
+    setTasks(tasks.map(task =>
+      task.id === taskId
+        ? { ...task, completed: !task.completed }
+        : task
+    ));
+  };
+
+  const onDeleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
+  };
+
+  const onEditTask = (taskId, newText) => {
+    setTasks(tasks.map(task =>
+      task.id === taskId
+        ? { ...task, text: newText }
+        : task
+    ));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Input onAddTask={addTask} />
+      <TodoList
+        tasks={tasks}
+        onToggleComplete={onToggleComplete}
+        onDeleteTask={onDeleteTask}
+        onEditTask={onEditTask}
+      />
+    </>
   );
 }
 
