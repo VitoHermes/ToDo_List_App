@@ -7,16 +7,18 @@ import TodoList from './componets/TodoList/TodoList';
 
 function App() {
 
+  // 从localStorage中获取task
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem('tasks');
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
+  // task发生变化的时候，将task保存到localStorage
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-
+  // task 的增删改
   const addTask = (taskText) => {
     setTasks([...tasks, {
       id: Date.now(),

@@ -1,11 +1,4 @@
 import { useState } from 'react';
-// const addTask = (taskText) => {
-//     setTasks([...tasks, {
-//       id: Date.now(),
-//       text: taskText,
-//       completed: false
-//     }]);
-//   };
 
 function Input({ onAddTask }) {
     const [inputValue, setInputValue] = useState('');
