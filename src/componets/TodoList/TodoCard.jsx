@@ -47,7 +47,7 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
                         ref={provided.innerRef}
                     >
                         {tasks.map((task, index) => (
-                            <Draggable key={task.id} draggableId={task.id} index={index}>
+                            <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                                 {(provided) => (
                                     <div
                                         ref={provided.innerRef}

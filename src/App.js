@@ -47,9 +47,9 @@ function App() {
     ));
   };
 
-  const onReorderTasks = (reorderedTasks) => {
-    setTasks(reorderedTasks);
-  };
+  // const onReorderTasks = (reorderedTasks) => {
+  //   setTasks(reorderedTasks);
+  // };
 
   return (
     <>
@@ -60,7 +60,7 @@ function App() {
         onToggleComplete={onToggleComplete}
         onDeleteTask={onDeleteTask}
         onEditTask={onEditTask}
-        onReorderTasks={onReorderTasks}
+        onReorderTasks={setTasks}
       />
     </>
   );
