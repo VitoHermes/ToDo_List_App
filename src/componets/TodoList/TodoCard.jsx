@@ -7,6 +7,7 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
     const [currentEditTaskId, setCurrentEditTaskId] = useState(null);
     const [newText, setNewText] = useState('');
 
+
     const handleEditClick = (taskId, currentText) => {
         setIsModalOpen(true);
         setCurrentEditTaskId(taskId);
@@ -38,7 +39,7 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
 
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="droppable-tasks">
+            <Droppable droppableId="todo-container">
                 {(provided) => (
                     <div
                         className="todo-container"
@@ -46,7 +47,7 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
                         ref={provided.innerRef}
                     >
                         {tasks.map((task, index) => (
-                            <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                            <Draggable key={task.id} draggableId={task.id} index={index}>
                                 {(provided) => (
                                     <div
                                         ref={provided.innerRef}
