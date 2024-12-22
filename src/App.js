@@ -13,10 +13,17 @@ function App() {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
+
   // task发生变化的时候，将task保存到localStorage
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    console.log('all tasks', tasks);
+    console.log('completed tasks', tasks.filter(task => task.completed));
+    console.log('incomplete tasks', tasks.filter(task => !task.completed));
+
   }, [tasks]);
+
+  const [filteredTasks, setFilteredTasks] = useState(tasks);
 
   // task 的增删改
   const addTask = (taskText) => {
@@ -47,16 +54,34 @@ function App() {
     ));
   };
 
-  // const onReorderTasks = (reorderedTasks) => {
-  //   setTasks(reorderedTasks);
-  // };
+  // 根据filter过滤task
+  // all
+  // completed
+  // incomplete
+
+  const onFilterTasks = (filter) => {
+    if (filter === 'all') {
+      setFilteredTasks(tasks);
+    } else {
+      setFilteredTasks(tasks.filter(task => {
+        return filter === 'completed' ? task.completed : !task.completed;
+      }));
+    }
+  };
+
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
 
   return (
     <>
       <Header />
-      <Input onAddTask={addTask} />
+      <Input
+        onAddTask={addTask}
+        onFilterTasks={onFilterTasks}
+      />
       <TodoList
-        tasks={tasks}
+        tasks={filteredTasks}
         onToggleComplete={onToggleComplete}
         onDeleteTask={onDeleteTask}
         onEditTask={onEditTask}

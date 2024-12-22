@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-function Input({ onAddTask }) {
+function Input({ onAddTask, onFilterTasks }) {
     const [inputValue, setInputValue] = useState('');
+    const [filter, setFilter] = useState('all');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -9,6 +10,12 @@ function Input({ onAddTask }) {
             onAddTask(inputValue);
             setInputValue('');
         }
+    };
+
+    const handleFilterChange = (e) => {
+        const selectedFilter = e.target.value;
+        setFilter(selectedFilter);
+        onFilterTasks(selectedFilter);
     };
 
     return (
@@ -26,6 +33,15 @@ function Input({ onAddTask }) {
             >
                 Add
             </button>
+            <select
+                className='w-[100px] h-[54px] border-1 border-gray-300 rounded-md p-2'
+                value={filter}
+                onChange={(e) => handleFilterChange(e)}
+            >
+                <option value="all">全部</option>
+                <option value="completed">已完成</option>
+                <option value="incomplete">未完成</option>
+            </select>
         </form>
     );
 }

@@ -2,7 +2,7 @@ import './cardstyles.css';
 import { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorderTasks }) {
+function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorderTasks, onFilterTasks }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentEditTaskId, setCurrentEditTaskId] = useState(null);
     const [newText, setNewText] = useState('');
@@ -37,7 +37,13 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
         onReorderTasks(reorderedTasks);
     }
 
+    const handleFilterChange = (e) => {
+        const selectedFilter = e.target.value;
+        onFilterTasks(selectedFilter);
+    };
+
     return (
+
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="todo-container">
                 {(provided) => (
@@ -101,6 +107,7 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
                 </div>
             )}
         </DragDropContext>
+
     )
 }
 
