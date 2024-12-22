@@ -1,6 +1,7 @@
 import './cardstyles.css';
 import { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Modal from './Modal';
 
 function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorderTasks, onFilterTasks }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,16 +96,12 @@ function TodoCard({ tasks, onToggleComplete, onDeleteTask, onEditTask, onReorder
                 )}
             </Droppable>
             {isModalOpen && (
-                <div className="modal">
-                    <input
-                        type="text"
-                        value={newText}
-                        onChange={(e) => setNewText(e.target.value)}
-                        placeholder="编辑任务"
-                    />
-                    <button onClick={handleSaveEdit}>保存</button>
-                    <button id="cancle-btn" onClick={cancleEdit}>取消</button>
-                </div>
+                <Modal
+                    newText={newText}
+                    setNewText={setNewText}
+                    handleSaveEdit={handleSaveEdit}
+                    cancleEdit={cancleEdit}
+                />
             )}
         </DragDropContext>
 
